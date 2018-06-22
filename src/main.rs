@@ -67,6 +67,7 @@ fn main() {
 }
 
 fn process_mapping(config: &Config, mapping: &MappingConfig, batch_size: usize) {
+    info!("Processing mapping, depot_directory = {}", mapping.depot_directory());
     let depot_directory = mapping.depot_directory();
     let bookmark = mapping.bookmark();
 
