@@ -46,7 +46,7 @@ fn main() {
     let batch_size = config.batch_size();
 
     loop {
-        info!("Processing batch");
+        info!("Processing batch, batch_size = {}", batch_size);
         let now = Instant::now();
 
         for mapping in config.mappings() {
