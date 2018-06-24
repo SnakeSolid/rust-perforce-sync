@@ -1,5 +1,9 @@
+mod error;
+
+pub use self::error::ConfigError;
+pub use self::error::ConfigResult;
+
 use std::fs::File;
-use std::io::Result as IoResult;
 use std::path::Path;
 
 use serde_yaml;
@@ -37,13 +41,14 @@ pub struct MappingConfig {
 }
 
 impl Config {
-    pub fn read<P>(path: P) -> IoResult<Config>
+    pub fn read<P>(path: P) -> ConfigResult<Config>
     where
         P: AsRef<Path>,
     {
-        let file = File::open(path)?;
+        let file = File::open(path).map_err(ConfigError::io_error)?;
+        let config = serde_yaml::from_reader(file).map_err(ConfigError::deserialization_error)?;
 
-        Ok(serde_yaml::from_reader(file).expect("deserialization error"))
+        Ok(config)
     }
 
     #[inline]

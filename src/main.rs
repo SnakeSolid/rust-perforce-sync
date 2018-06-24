@@ -8,6 +8,7 @@ extern crate env_logger;
 extern crate serde_yaml;
 extern crate time;
 
+use std::env;
 use std::thread::sleep;
 use std::time::Duration;
 use std::time::Instant;
@@ -41,7 +42,19 @@ fn format_change(change: &Change) -> String {
 fn main() {
     env_logger::init();
 
-    let config = Config::read("config.yaml").expect("config read failed");
+    let args: Vec<_> = env::args().skip(1).collect();
+
+    if args.len() == 0 {
+        error!("No configuration given. Use configuration file as single parameter.");
+
+        return;
+    } else if args.len() > 1 {
+        error!("Too many configurations given. Use configuration file as single parameter.");
+
+        return;
+    }
+
+    let config = Config::read(&args[0]).expect("config read failed");
     let update_interval = Duration::from_secs(config.update_interval());
     let batch_size = config.batch_size();
 
@@ -67,7 +80,10 @@ fn main() {
 }
 
 fn process_mapping(config: &Config, mapping: &MappingConfig, batch_size: usize) {
-    info!("Processing mapping, depot_directory = {}", mapping.depot_directory());
+    info!(
+        "Processing mapping, depot_directory = {}",
+        mapping.depot_directory()
+    );
     let depot_directory = mapping.depot_directory();
     let bookmark = mapping.bookmark();
 
