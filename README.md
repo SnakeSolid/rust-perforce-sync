@@ -12,12 +12,12 @@ During single path synchronization tool executes following command sequence:
 * get last commit message from Mercurial repository - `hg log --rev BOOKMARK --template {desc|firstline}`;
 * list all Perforce changes from last commit - `p4 -F '%change%' changes -e CHANGE PATH...`;
 * for every Perforce change do in loop:
-  * read full change description - `p4 change -o CHANGE`;
-  * synchronize Perforce workspace with change - `p4 sync -q PATH...@CHANGE`;
-  * clean Perforce workspace - `p4 clean PATH...`;
-  * add all large files (with size > 10Mib) as large files to Mercurial - `hg add --large FILE`;
-  * add/remove all changed files to Mercurial repository - `hg addremove --similarity 80`;
-  * commit changes to Mercurial repository - `hg commit -m MESSAGE`.
+    * read full change description - `p4 change -o CHANGE`;
+    * synchronize Perforce workspace with change - `p4 sync -q PATH...@CHANGE`;
+    * clean Perforce workspace - `p4 clean PATH...`;
+    * add all large files (with size > 10Mib) as large files to Mercurial - `hg add --large FILE`;
+    * add/remove all changed files to Mercurial repository - `hg addremove --similarity 80`;
+    * commit changes to Mercurial repository - `hg commit -m MESSAGE`.
 * logout from Perforce - `p4 logout`.
 * push new commit to Mercurial server - `hg push`.
 
@@ -53,19 +53,19 @@ Configuration file should be in YAML format. Configuration file fields:
 * `update_interval` - interval between updates;
 * `batch_size` - number of changes per single synchronization round;
 * `perforce` - Perforce connection settings:
-  * `command` - Perforce command line executable;
-  * `work_dir` - Perforce working directory;
-  * `client` - Perforce workspace name;
-  * `port` - Perforce connection port in format: "tcp:server:port";
-  * `user` - Perforce user name to login with;
-  * `password` - Perforce password;
-  * `ignore` - Perforce ignore file, must contain at least all Mercurial directories;
+    * `command` - Perforce command line executable;
+    * `work_dir` - Perforce working directory;
+    * `client` - Perforce workspace name;
+    * `port` - Perforce connection port in format: "tcp:server:port";
+    * `user` - Perforce user name to login with;
+    * `password` - Perforce password;
+    * `ignore` - Perforce ignore file, must contain at least all Mercurial directories;
 * `mercurial` - mercurial settings:
-  * `command` - path to Mercurial executable command.
+    * `command` - path to Mercurial executable command.
 * `mappings` - list of Perforce path to Mercurial bookmark mappings:
-  * `depot_directory` - Perforce depot path (starting with //);
-  * `bookmark` - Mercurial bookmark name;
-  * `local_directory` - Mercurial repository directory.
+    * `depot_directory` - Perforce depot path (starting with //);
+    * `bookmark` - Mercurial bookmark name;
+    * `local_directory` - Mercurial repository directory.
 
 ## Ignore File
 
